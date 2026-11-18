@@ -20,23 +20,17 @@
       --text-secondary: #94a3b8;
       --text-muted: #64748b;
       --accent: #38bdf8;
-      --accent-dim: rgba(56, 189, 248, 0.14);
       --green: #10b981;
       --green-bg: rgba(16, 185, 129, 0.14);
       --red: #ef4444;
       --red-bg: rgba(239, 68, 68, 0.14);
       --amber: #f59e0b;
-      --amber-bg: rgba(245, 158, 11, 0.14);
       --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
       --radius: 10px;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       background-color: var(--bg-root);
@@ -49,12 +43,8 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    .mono {
-      font-family: var(--font-mono);
-      font-variant-numeric: tabular-nums;
-    }
+    .mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
 
-    /* Header */
     header {
       position: sticky;
       top: 0;
@@ -112,21 +102,14 @@
       transition: all 0.15s ease;
     }
 
-    nav[aria-label="Pages"] a:hover {
-      color: var(--text-primary);
-    }
-
+    nav[aria-label="Pages"] a:hover { color: var(--text-primary); }
     nav[aria-label="Pages"] a.active {
       background: var(--bg-surface);
       color: var(--text-primary);
       box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
     }
 
-    .header-actions {
-      display: flex;
-      align-items: center;
-      gap: 0.65rem;
-    }
+    .header-actions { display: flex; align-items: center; gap: 0.65rem; }
 
     .status-pill {
       display: inline-flex;
@@ -141,26 +124,10 @@
       border-radius: 999px;
     }
 
-    .status-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--text-muted);
-    }
-
-    .status-dot.live {
-      background: var(--green);
-      box-shadow: 0 0 8px var(--green);
-    }
-
-    .status-dot.demo {
-      background: var(--amber);
-      box-shadow: 0 0 8px var(--amber);
-    }
-
-    .status-dot.error {
-      background: var(--red);
-    }
+    .status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--text-muted); }
+    .status-dot.live { background: var(--green); box-shadow: 0 0 8px var(--green); }
+    .status-dot.demo { background: var(--amber); box-shadow: 0 0 8px var(--amber); }
+    .status-dot.error { background: var(--red); }
 
     button {
       font-family: var(--font-sans);
@@ -178,44 +145,18 @@
       transition: all 0.15s ease;
     }
 
-    button:hover {
-      background: var(--bg-surface-hover);
-      border-color: var(--border-strong);
-    }
+    button:hover { background: var(--bg-surface-hover); border-color: var(--border-strong); }
+    button.primary { background: var(--accent); color: #06131f; border-color: var(--accent); font-weight: 600; }
+    button.primary:hover { filter: brightness(1.08); }
+    button.ghost { background: transparent; border-color: transparent; color: var(--text-secondary); padding: 0.3rem 0.55rem; }
+    button.ghost:hover { color: var(--text-primary); background: rgba(255, 255, 255, 0.05); }
 
-    button.primary {
-      background: var(--accent);
-      color: #06131f;
-      border-color: var(--accent);
-      font-weight: 600;
-    }
-
-    button.primary:hover {
-      filter: brightness(1.08);
-    }
-
-    button.ghost {
-      background: transparent;
-      border-color: transparent;
-      color: var(--text-secondary);
-      padding: 0.3rem 0.55rem;
-    }
-
-    button.ghost:hover {
-      color: var(--text-primary);
-      background: rgba(255, 255, 255, 0.05);
-    }
-
-    /* Collapsible Configuration & Feed Log Drawer */
     section[aria-label="Configuration and feed log"] {
       background: var(--bg-elevated);
       border-bottom: 1px solid var(--border);
       padding: 1.25rem 1.5rem;
     }
-
-    section[aria-label="Configuration and feed log"][hidden] {
-      display: none;
-    }
+    section[aria-label="Configuration and feed log"][hidden] { display: none; }
 
     .drawer-grid {
       max-width: 1360px;
@@ -235,25 +176,10 @@
       gap: 0.85rem;
     }
 
-    .panel-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.5rem;
-    }
+    .panel-header { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
+    .panel-header h2 { font-size: 0.92rem; font-weight: 600; letter-spacing: -0.01em; }
 
-    .panel-header h2 {
-      font-size: 0.92rem;
-      font-weight: 600;
-      letter-spacing: -0.01em;
-    }
-
-    .field-group {
-      display: flex;
-      flex-direction: column;
-      gap: 0.35rem;
-    }
-
+    .field-group { display: flex; flex-direction: column; gap: 0.35rem; }
     .field-group label {
       font-size: 0.76rem;
       font-weight: 500;
@@ -262,13 +188,9 @@
       justify-content: space-between;
     }
 
-    .input-row {
-      display: flex;
-      gap: 0.5rem;
-    }
+    .input-row { display: flex; gap: 0.5rem; }
 
-    input[type="text"],
-    input[type="password"] {
+    input[type="text"], input[type="password"] {
       width: 100%;
       background: var(--bg-input);
       border: 1px solid var(--border);
@@ -281,27 +203,12 @@
       transition: border-color 0.15s ease;
     }
 
-    input[type="text"]:focus,
-    input[type="password"]:focus {
-      border-color: var(--accent);
-    }
+    input[type="text"]:focus, input[type="password"]:focus { border-color: var(--accent); }
 
-    .helper-text {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      line-height: 1.4;
-    }
+    .helper-text { font-size: 0.75rem; color: var(--text-muted); line-height: 1.4; }
+    .helper-text a { color: var(--accent); text-decoration: none; }
+    .helper-text a:hover { text-decoration: underline; }
 
-    .helper-text a {
-      color: var(--accent);
-      text-decoration: none;
-    }
-
-    .helper-text a:hover {
-      text-decoration: underline;
-    }
-
-    /* Feed Log */
     .log-filters {
       display: inline-flex;
       background: var(--bg-input);
@@ -319,17 +226,14 @@
       border-radius: 4px;
     }
 
-    .log-filters button.active {
-      background: var(--bg-surface-hover);
-      color: var(--text-primary);
-    }
+    .log-filters button.active { background: var(--bg-surface-hover); color: var(--text-primary); }
 
     .feed-log {
       background: var(--bg-input);
       border: 1px solid var(--border);
       border-radius: 7px;
       padding: 0.65rem;
-      height: 215px;
+      height: 235px;
       overflow-y: auto;
       font-family: var(--font-mono);
       font-size: 0.74rem;
@@ -338,30 +242,14 @@
       gap: 0.35rem;
     }
 
-    .log-entry {
-      display: flex;
-      gap: 0.5rem;
-      align-items: baseline;
-      line-height: 1.35;
-      word-break: break-word;
-    }
-
-    .log-time {
-      color: var(--text-muted);
-      flex-shrink: 0;
-    }
-
-    .log-tag {
-      font-weight: 600;
-      flex-shrink: 0;
-    }
-
+    .log-entry { display: flex; gap: 0.5rem; align-items: baseline; line-height: 1.35; word-break: break-word; }
+    .log-time { color: var(--text-muted); flex-shrink: 0; }
+    .log-tag { font-weight: 600; flex-shrink: 0; }
     .log-tag.ok { color: var(--green); }
     .log-tag.info { color: var(--accent); }
     .log-tag.warn { color: var(--amber); }
     .log-tag.error { color: var(--red); }
 
-    /* Main Workspace */
     main {
       flex: 1;
       max-width: 1360px;
@@ -373,60 +261,16 @@
       gap: 1.25rem;
     }
 
-    /* Summary Bar */
-    .summary-strip {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 0.9rem;
-    }
+    .summary-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.9rem; }
+    .kpi-card { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 0.9rem 1.1rem; }
+    .kpi-label { font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.25rem; }
+    .kpi-value { font-size: 1.25rem; font-weight: 700; font-family: var(--font-mono); }
 
-    .kpi-card {
-      background: var(--bg-surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 0.9rem 1.1rem;
-    }
+    .toolbar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+    .toolbar-left { display: flex; align-items: center; gap: 0.75rem; flex: 1; min-width: 240px; }
+    .search-input { max-width: 300px; }
 
-    .kpi-label {
-      font-size: 0.75rem;
-      color: var(--text-secondary);
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      margin-bottom: 0.25rem;
-    }
-
-    .kpi-value {
-      font-size: 1.25rem;
-      font-weight: 700;
-      font-family: var(--font-mono);
-    }
-
-    .toolbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-
-    .toolbar-left {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      flex: 1;
-      min-width: 240px;
-    }
-
-    .search-input {
-      max-width: 300px;
-    }
-
-    /* Home Card Grid */
-    .cards-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
-      gap: 1rem;
-    }
+    .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 1rem; }
 
     .stock-card {
       background: var(--bg-surface);
@@ -439,24 +283,10 @@
       transition: transform 0.15s ease, border-color 0.15s ease;
     }
 
-    .stock-card:hover {
-      border-color: var(--border-strong);
-      transform: translateY(-2px);
-    }
+    .stock-card:hover { border-color: var(--border-strong); transform: translateY(-2px); }
 
-    .card-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.75rem;
-    }
-
-    .ticker-identity {
-      display: flex;
-      align-items: center;
-      gap: 0.65rem;
-      min-width: 0;
-    }
+    .card-top { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; }
+    .ticker-identity { display: flex; align-items: center; gap: 0.65rem; min-width: 0; }
 
     .logo-wrap {
       width: 34px;
@@ -474,285 +304,70 @@
       color: var(--accent);
     }
 
-    .logo-wrap img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      background: #ffffff;
-      padding: 3px;
-    }
+    .logo-wrap img { width: 100%; height: 100%; object-fit: contain; background: #ffffff; padding: 3px; }
+    .ticker-title { font-weight: 700; font-size: 1rem; letter-spacing: -0.01em; }
+    .ticker-sub { font-size: 0.75rem; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 145px; }
 
-    .ticker-title {
-      font-weight: 700;
-      font-size: 1rem;
-      letter-spacing: -0.01em;
-    }
+    .badge { font-family: var(--font-mono); font-size: 0.76rem; font-weight: 600; padding: 0.22rem 0.55rem; border-radius: 6px; white-space: nowrap; }
+    .badge.pos { background: var(--green-bg); color: var(--green); }
+    .badge.neg { background: var(--red-bg); color: var(--red); }
+    .badge.flat { background: rgba(148, 163, 184, 0.14); color: var(--text-secondary); }
 
-    .ticker-sub {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      max-width: 140px;
-    }
-
-    .badge {
-      font-family: var(--font-mono);
-      font-size: 0.76rem;
-      font-weight: 600;
-      padding: 0.22rem 0.55rem;
-      border-radius: 6px;
-      white-space: nowrap;
-    }
-
-    .badge.pos {
-      background: var(--green-bg);
-      color: var(--green);
-    }
-
-    .badge.neg {
-      background: var(--red-bg);
-      color: var(--red);
-    }
-
-    .badge.flat {
-      background: rgba(148, 163, 184, 0.14);
-      color: var(--text-secondary);
-    }
-
-    .price-row {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-    }
-
-    .price-main {
-      font-size: 1.55rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-    }
-
-    .price-delta {
-      font-size: 0.82rem;
-    }
-
+    .price-row { display: flex; align-items: baseline; justify-content: space-between; }
+    .price-main { font-size: 1.55rem; font-weight: 700; letter-spacing: -0.02em; }
+    .price-delta { font-size: 0.82rem; }
     .pos-text { color: var(--green); }
     .neg-text { color: var(--red); }
 
-    /* Intraday Range Bar */
-    .range-block {
-      display: flex;
-      flex-direction: column;
-      gap: 0.3rem;
-    }
+    .range-block { display: flex; flex-direction: column; gap: 0.3rem; }
+    .range-labels { display: flex; justify-content: space-between; font-size: 0.72rem; color: var(--text-muted); }
+    .range-track { height: 5px; background: var(--bg-input); border-radius: 999px; position: relative; overflow: hidden; }
+    .range-fill { position: absolute; top: 0; left: 0; height: 100%; background: linear-gradient(90deg, var(--accent), var(--green)); border-radius: 999px; }
 
-    .range-labels {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.72rem;
-      color: var(--text-muted);
-    }
+    .meta-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; padding-top: 0.65rem; border-top: 1px solid var(--border); font-size: 0.75rem; }
+    .meta-item span { display: block; color: var(--text-muted); font-size: 0.68rem; }
 
-    .range-track {
-      height: 5px;
-      background: var(--bg-input);
-      border-radius: 999px;
-      position: relative;
-      overflow: hidden;
-    }
+    .score-footer { display: flex; align-items: center; justify-content: space-between; background: var(--bg-input); padding: 0.45rem 0.65rem; border-radius: 7px; font-size: 0.76rem; }
+    .score-pill { font-family: var(--font-mono); font-weight: 700; }
 
-    .range-fill {
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 100%;
-      background: linear-gradient(90deg, var(--accent), var(--green));
-      border-radius: 999px;
-    }
-
-    .meta-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0.5rem;
-      padding-top: 0.65rem;
-      border-top: 1px solid var(--border);
-      font-size: 0.75rem;
-    }
-
-    .meta-item span {
-      display: block;
-      color: var(--text-muted);
-      font-size: 0.68rem;
-    }
-
-    .score-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: var(--bg-input);
-      padding: 0.45rem 0.65rem;
-      border-radius: 7px;
-      font-size: 0.76rem;
-    }
-
-    .score-pill {
-      font-family: var(--font-mono);
-      font-weight: 700;
-    }
-
-    /* Watchlist Table */
-    .table-wrap {
-      background: var(--bg-surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow-x: auto;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.84rem;
-    }
-
+    .table-wrap { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius); overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.84rem; }
     th {
-      text-align: left;
-      padding: 0.75rem 1rem;
-      font-size: 0.74rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      color: var(--text-secondary);
-      border-bottom: 1px solid var(--border);
-      background: var(--bg-elevated);
-      cursor: pointer;
-      user-select: none;
-      white-space: nowrap;
+      text-align: left; padding: 0.75rem 1rem; font-size: 0.74rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-secondary);
+      border-bottom: 1px solid var(--border); background: var(--bg-elevated); cursor: pointer; user-select: none; white-space: nowrap;
     }
+    th:hover { color: var(--text-primary); }
+    td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); white-space: nowrap; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(255, 255, 255, 0.02); }
 
-    th:hover {
-      color: var(--text-primary);
-    }
-
-    td {
-      padding: 0.75rem 1rem;
-      border-bottom: 1px solid var(--border);
-      white-space: nowrap;
-    }
-
-    tr:last-child td {
-      border-bottom: none;
-    }
-
-    tr:hover td {
-      background: rgba(255, 255, 255, 0.02);
-    }
-
-    /* Heatmap */
-    .heatmap-legend {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      font-size: 0.75rem;
-      color: var(--text-secondary);
-    }
-
-    .legend-swatch {
-      width: 24px;
-      height: 12px;
-      border-radius: 3px;
-    }
-
-    .heatmap-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(165px, 1fr));
-      gap: 0.65rem;
-    }
-
+    .heatmap-legend { display: flex; align-items: center; gap: 0.4rem; font-size: 0.75rem; color: var(--text-secondary); }
+    .legend-swatch { width: 24px; height: 12px; border-radius: 3px; }
+    .heatmap-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(165px, 1fr)); gap: 0.65rem; }
     .heat-tile {
-      border-radius: 9px;
-      padding: 1.15rem 0.9rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      min-height: 122px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      transition: transform 0.15s ease;
+      border-radius: 9px; padding: 1.15rem 0.9rem; display: flex; flex-direction: column;
+      justify-content: space-between; min-height: 122px; border: 1px solid rgba(255, 255, 255, 0.08); transition: transform 0.15s ease;
     }
-
-    .heat-tile:hover {
-      transform: scale(1.02);
-    }
-
-    .heat-symbol {
-      font-weight: 700;
-      font-size: 1.05rem;
-      color: #ffffff;
-    }
-
-    .heat-pct {
-      font-family: var(--font-mono);
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: #ffffff;
-      margin: 0.35rem 0;
-    }
-
-    .heat-price {
-      font-family: var(--font-mono);
-      font-size: 0.78rem;
-      color: rgba(255, 255, 255, 0.85);
-    }
+    .heat-tile:hover { transform: scale(1.02); }
+    .heat-symbol { font-weight: 700; font-size: 1.05rem; color: #ffffff; }
+    .heat-pct { font-family: var(--font-mono); font-size: 1.25rem; font-weight: 700; color: #ffffff; margin: 0.35rem 0; }
+    .heat-price { font-family: var(--font-mono); font-size: 0.78rem; color: rgba(255, 255, 255, 0.85); }
 
     .empty-state {
-      background: var(--bg-surface);
-      border: 1px dashed var(--border-strong);
-      border-radius: var(--radius);
-      padding: 3rem 1.5rem;
-      text-align: center;
-      color: var(--text-secondary);
+      background: var(--bg-surface); border: 1px dashed var(--border-strong);
+      border-radius: var(--radius); padding: 3rem 1.5rem; text-align: center; color: var(--text-secondary);
     }
 
-    /* Footer */
-    footer {
-      border-top: 1px solid var(--border);
-      background: var(--bg-elevated);
-      padding: 1rem 1.5rem;
-      margin-top: auto;
-    }
-
+    footer { border-top: 1px solid var(--border); background: var(--bg-elevated); padding: 1rem 1.5rem; margin-top: auto; }
     .footer-inner {
-      max-width: 1360px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-      font-size: 0.78rem;
-      color: var(--text-muted);
+      max-width: 1360px; margin: 0 auto; display: flex; justify-content: space-between;
+      align-items: center; gap: 1rem; flex-wrap: wrap; font-size: 0.78rem; color: var(--text-muted);
     }
 
     @media (max-width: 900px) {
-      .drawer-grid {
-        grid-template-columns: 1fr;
-      }
-      .summary-strip {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 600px) {
-      header {
-        padding: 0 1rem;
-        height: auto;
-        padding-top: 0.65rem;
-        padding-bottom: 0.65rem;
-        flex-wrap: wrap;
-      }
-      main {
-        padding: 1rem;
-      }
+      .drawer-grid { grid-template-columns: 1fr; }
+      .summary-strip { grid-template-columns: repeat(2, 1fr); }
     }
   </style>
 </head>
@@ -779,20 +394,8 @@
         <span class="status-dot" id="status-dot"></span>
         <span id="status-label">Initializing</span>
       </span>
-      <button type="button" id="btn-refresh" title="Refresh quotes">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="23 4 23 10 17 10"></polyline>
-          <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
-        </svg>
-        <span>Refresh</span>
-      </button>
-      <button type="button" id="btn-toggle-config" aria-expanded="false">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="3"></circle>
-          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-        </svg>
-        <span>Configure</span>
-      </button>
+      <button type="button" id="btn-refresh" title="Refresh quotes">Refresh</button>
+      <button type="button" id="btn-toggle-config" aria-expanded="false">Configure</button>
     </div>
   </header>
 
@@ -806,33 +409,36 @@
 
         <div class="field-group">
           <label for="input-api-key">
-            <span>Eulerpool API Key (Bearer Token)</span>
+            <span>Eulerpool API Key</span>
             <span id="key-saved-badge" style="color: var(--green); display: none;">Saved in browser</span>
           </label>
           <div class="input-row">
-            <input type="password" id="input-api-key" placeholder="ep_live_xxxxxxxxxxxxxxxx" autocomplete="off" />
+            <input type="password" id="input-api-key" placeholder="Paste your Eulerpool API key" autocomplete="off" />
             <button type="button" id="btn-toggle-key-vis">Show</button>
             <button type="button" class="primary" id="btn-save-key">Save</button>
           </div>
           <p class="helper-text">
-            Your key is saved only in this browser and sent only via <code>Authorization: Bearer</code> to <code>api.eulerpool.com</code>. Get a free key (100,000 req/mo) at <a href="https://eulerpool.com/developers/register" target="_blank" rel="noopener noreferrer">eulerpool.com</a>.
+            Authenticated via <code>?token=</code> to <code>api.eulerpool.com/api/1/</code>. Get a free key at <a href="https://eulerpool.com/developers" target="_blank" rel="noopener noreferrer">eulerpool.com/developers</a>.
           </p>
         </div>
 
         <div class="field-group">
-          <label for="input-symbols">Watchlist Symbols</label>
+          <label for="input-symbols">Watchlist Symbols (Tickers or ISINs)</label>
           <div class="input-row">
-            <input type="text" id="input-symbols" placeholder="AAPL, MSFT, NVDA, GOOGL, AMZN, RY.TO" />
+            <input type="text" id="input-symbols" placeholder="AAPL, MSFT, NVDA, GOOGL, AMZN, META, TSLA" />
             <button type="button" id="btn-save-symbols">Update</button>
           </div>
           <p class="helper-text">
-            Separate symbols with commas. Supports 90+ global exchanges including TSX (e.g. <code>RY.TO</code>, <code>SHOP.TO</code>) and European tickers on the free plan.
+            Accepts standard tickers (<code>AAPL</code>, <code>RY.TO</code>, <code>ASML</code>) or 12-character ISINs (<code>US0378331005</code>).
           </p>
         </div>
 
         <div class="field-group">
-          <label for="input-cors-proxy">Optional CORS Proxy Prefix (for static GitHub Pages if needed)</label>
-          <input type="text" id="input-cors-proxy" placeholder="Leave blank for direct calls, e.g. https://your-worker.workers.dev/?url=" />
+          <label for="input-endpoint-path">Endpoint Template (Optional Override)</label>
+          <input type="text" id="input-endpoint-path" placeholder="Auto: /api/1/equity/profile/{isin}" />
+          <p class="helper-text">
+            Default uses <code>/api/1/equity/profile/{isin}</code>. You can also paste any route from Eulerpool Docs (e.g. <code>/api/1/equity/overview/{isin}</code>).
+          </p>
         </div>
       </div>
 
@@ -868,62 +474,52 @@
       const STORAGE_KEYS = {
         API_KEY: 'stockpulse_eulerpool_api_key',
         SYMBOLS: 'stockpulse_eulerpool_symbols',
-        PROXY: 'stockpulse_eulerpool_cors_proxy'
+        ENDPOINT: 'stockpulse_eulerpool_endpoint'
       };
 
       const EULERPOOL_BASE = 'https://api.eulerpool.com';
       const DEFAULT_SYMBOLS = ['AAPL', 'MSFT', 'NVDA', 'GOOGL', 'AMZN', 'META', 'TSLA', 'RY.TO', 'SHOP.TO', 'ASML'];
 
+      const TICKER_TO_ISIN = {
+        'AAPL': 'US0378331005',
+        'MSFT': 'US5949181045',
+        'NVDA': 'US67066G1040',
+        'GOOGL': 'US02079K3059',
+        'GOOG': 'US02079K1079',
+        'AMZN': 'US0231351067',
+        'META': 'US30303M1027',
+        'TSLA': 'US88160R1014',
+        'ASML': 'NL0010273215',
+        'RY.TO': 'CA7800871021',
+        'SHOP.TO': 'CA82509L1076',
+        'TD.TO': 'CA8911605092',
+        'ENB.TO': 'CA29250N1050'
+      };
+
       const state = {
         apiKey: localStorage.getItem(STORAGE_KEYS.API_KEY) || '',
         symbols: parseSymbols(localStorage.getItem(STORAGE_KEYS.SYMBOLS)) || DEFAULT_SYMBOLS,
-        corsProxy: localStorage.getItem(STORAGE_KEYS.PROXY) || '',
+        endpointTemplate: localStorage.getItem(STORAGE_KEYS.ENDPOINT) || '',
         quotes: [],
         logs: [],
         logFilter: 'all',
         searchQuery: '',
         sortField: 'percentChange',
         sortDir: 'desc',
-        isDemo: false,
-        loading: false
+        isDemo: false
       };
 
       function parseSymbols(raw) {
         if (!raw) return null;
-        const list = raw
-          .split(',')
-          .map(s => s.trim().toUpperCase())
-          .filter(Boolean);
+        const list = raw.split(',').map(s => s.trim().toUpperCase()).filter(Boolean);
         return list.length ? [...new Set(list)] : null;
       }
 
-      /* Logging */
       function addLog(level, message) {
-        const now = new Date();
-        const time = now.toTimeString().split(' ')[0];
+        const time = new Date().toTimeString().split(' ')[0];
         state.logs.unshift({ time, level, message });
         if (state.logs.length > 150) state.logs.pop();
         renderLogs();
-      }
-
-      function renderLogs() {
-        const container = document.getElementById('feed-log');
-        const filtered = state.logFilter === 'all'
-          ? state.logs
-          : state.logs.filter(item => item.level === state.logFilter);
-
-        if (!filtered.length) {
-          container.innerHTML = `<div style="color: var(--text-muted);">No log entries for filter "${state.logFilter}".</div>`;
-          return;
-        }
-
-        container.innerHTML = filtered.map(entry => `
-          <div class="log-entry">
-            <span class="log-time">${entry.time}</span>
-            <span class="log-tag ${entry.level}">[${entry.level.toUpperCase()}]</span>
-            <span>${escapeHtml(entry.message)}</span>
-          </div>
-        `).join('');
       }
 
       function escapeHtml(str) {
@@ -934,58 +530,85 @@
           .replace(/"/g, '&quot;');
       }
 
-      function setStatus(mode, text) {
-        const dot = document.getElementById('status-dot');
-        const label = document.getElementById('status-label');
-        dot.className = 'status-dot ' + mode;
-        label.textContent = text;
+      function renderLogs() {
+        const container = document.getElementById('feed-log');
+        const filtered = state.logFilter === 'all'
+          ? state.logs
+          : state.logs.filter(item => item.level === state.logFilter);
+
+        container.innerHTML = filtered.length
+          ? filtered.map(entry => `
+              <div class="log-entry">
+                <span class="log-time">${entry.time}</span>
+                <span class="log-tag ${entry.level}">[${entry.level.toUpperCase()}]</span>
+                <span>${escapeHtml(entry.message)}</span>
+              </div>
+            `).join('')
+          : `<div style="color: var(--text-muted);">No log entries for "${state.logFilter}".</div>`;
       }
 
-      /* Rule-Based Pulse Score (0 - 100) */
+      function setStatus(mode, text) {
+        document.getElementById('status-dot').className = 'status-dot ' + mode;
+        document.getElementById('status-label').textContent = text;
+      }
+
       function computePulseScore(q) {
-        let score = 50;
-        const pctContribution = Math.max(-25, Math.min(25, q.percentChange * 6));
-        score += pctContribution;
-
-        const rangeSpan = q.high - q.low;
-        if (rangeSpan > 0) {
-          const rangePos = (q.price - q.low) / rangeSpan;
-          score += (rangePos - 0.5) * 30;
-        }
-
+        let score = 50 + Math.max(-25, Math.min(25, q.percentChange * 6));
+        const span = q.high - q.low;
+        if (span > 0) score += (((q.price - q.low) / span) - 0.5) * 30;
         score += q.price >= q.open ? 5 : -5;
         const finalScore = Math.round(Math.max(0, Math.min(100, score)));
-
-        let tier = 'Neutral';
-        let color = 'var(--amber)';
-        if (finalScore >= 70) {
-          tier = 'Strong';
-          color = 'var(--green)';
-        } else if (finalScore < 40) {
-          tier = 'Weak';
-          color = 'var(--red)';
-        }
-        return { score: finalScore, tier, color };
+        if (finalScore >= 70) return { score: finalScore, tier: 'Strong', color: 'var(--green)' };
+        if (finalScore < 40) return { score: finalScore, tier: 'Weak', color: 'var(--red)' };
+        return { score: finalScore, tier: 'Neutral', color: 'var(--amber)' };
       }
 
-      /* Normalize Eulerpool JSON fields */
-      function normalizeQuote(ticker, raw) {
-        const price = Number(raw.price ?? raw.last ?? raw.close ?? raw.c ?? 0);
-        const prevClose = Number(raw.previousClose ?? raw.prevClose ?? raw.pc ?? price);
-        const open = Number(raw.open ?? raw.o ?? prevClose);
-        const high = Number(raw.high ?? raw.h ?? Math.max(price, open));
-        const low = Number(raw.low ?? raw.l ?? Math.min(price, open));
-        const change = raw.change !== undefined ? Number(raw.change) : (price - prevClose);
-        const percentChange = raw.changePercent !== undefined
-          ? Number(raw.changePercent)
-          : raw.percentChange !== undefined
-            ? Number(raw.percentChange)
-            : (prevClose ? ((price - prevClose) / prevClose) * 100 : 0);
+      function extractNumber(obj, keys) {
+        for (const k of keys) {
+          if (obj && obj[k] !== undefined && obj[k] !== null && !isNaN(Number(obj[k]))) {
+            return Number(obj[k]);
+          }
+        }
+        return undefined;
+      }
+
+      function normalizeQuote(displaySymbol, raw) {
+        const nested = raw.quote || raw.marketData || raw.priceData || {};
+        const merged = { ...raw, ...nested };
+
+        const price = extractNumber(merged, [
+          'price', 'sharePrice', 'currentPrice', 'lastPrice', 'regularMarketPrice', 'last', 'close', 'c'
+        ]) ?? 0;
+
+        const prevClose = extractNumber(merged, [
+          'previousClose', 'prevClose', 'regularMarketPreviousClose', 'pc'
+        ]) ?? price;
+
+        const open = extractNumber(merged, [
+          'open', 'regularMarketOpen', 'o'
+        ]) ?? prevClose;
+
+        const high = extractNumber(merged, [
+          'high', 'dayHigh', 'regularMarketDayHigh', 'h'
+        ]) ?? Math.max(price, open);
+
+        const low = extractNumber(merged, [
+          'low', 'dayLow', 'regularMarketDayLow', 'l'
+        ]) ?? Math.min(price, open);
+
+        const change = extractNumber(merged, [
+          'change', 'regularMarketChange', 'd'
+        ]) ?? (price - prevClose);
+
+        const percentChange = extractNumber(merged, [
+          'changePercent', 'percentChange', 'changesPercentage', 'regularMarketChangePercent', 'dp'
+        ]) ?? (prevClose ? ((price - prevClose) / prevClose) * 100 : 0);
 
         const base = {
-          symbol: ticker,
-          name: raw.name || raw.companyName || ticker,
-          currency: raw.currency || (ticker.endsWith('.TO') ? 'CAD' : 'USD'),
+          symbol: merged.ticker || merged.symbol || displaySymbol,
+          isin: merged.isin || '',
+          name: merged.name || merged.companyName || merged.longName || displaySymbol,
+          currency: merged.currency || (displaySymbol.endsWith('.TO') ? 'CAD' : 'USD'),
           price,
           prevClose,
           open,
@@ -997,119 +620,114 @@
         return { ...base, pulse: computePulseScore(base) };
       }
 
-      function buildUrl(path) {
-        const target = `${EULERPOOL_BASE}${path}`;
-        if (!state.corsProxy) return target;
-        return state.corsProxy.endsWith('=') || state.corsProxy.endsWith('/')
-          ? `${state.corsProxy}${encodeURIComponent(target)}`
-          : `${state.corsProxy}/${target}`;
+      /* Simple GET request using ?token= (no custom headers -> no CORS preflight) */
+      async function callEulerpoolGet(path) {
+        const sep = path.includes('?') ? '&' : '?';
+        const url = `${EULERPOOL_BASE}${path}${sep}token=${encodeURIComponent(state.apiKey)}`;
+        return fetch(url);
       }
 
-      /* Eulerpool Data Adapter */
-      async function fetchSingleEulerpoolQuote(ticker) {
-        const res = await fetch(buildUrl(`/v1/equities/${encodeURIComponent(ticker)}/quote`), {
-          headers: {
-            'Authorization': `Bearer ${state.apiKey}`,
-            'Accept': 'application/json'
-          }
-        });
-        if (!res.ok) {
-          throw new Error(`HTTP ${res.status}`);
+      async function hydrateIsinDictionary() {
+        for (const indexId of ['sp500', 'nasdaq100', 'dax']) {
+          try {
+            const res = await callEulerpoolGet(`/api/1/index/constituents/${indexId}?start=0&end=500`);
+            if (res.ok) {
+              const list = await res.json();
+              if (Array.isArray(list)) {
+                for (const item of list) {
+                  if (item.ticker && item.isin) {
+                    TICKER_TO_ISIN[item.ticker.toUpperCase()] = item.isin;
+                  }
+                }
+              }
+            }
+          } catch (_) {}
         }
-        const json = await res.json();
-        const payload = json.data || json;
-        return normalizeQuote(ticker, payload);
       }
 
       async function fetchQuotesFromEulerpool() {
         if (!state.apiKey) {
-          addLog('warn', 'No Eulerpool API key configured. Loading simulated demo data.');
+          addLog('warn', 'No Eulerpool API key set. Showing demo preview.');
           loadDemoData();
           return;
         }
 
-        state.loading = true;
         state.isDemo = false;
         setStatus('live', 'Syncing…');
-        addLog('info', `Requesting ${state.symbols.length} symbols from Eulerpool API…`);
 
-        try {
-          // Primary: Batch endpoint (counts as 1 API request for up to 100 symbols)
-          const batchRes = await fetch(buildUrl('/v1/equities/batch/prices'), {
-            method: 'POST',
-            headers: {
-              'Authorization': `Bearer ${state.apiKey}`,
-              'Content-Type': 'application/json',
-              'Accept': 'application/json'
-            },
-            body: JSON.stringify({ symbols: state.symbols })
-          });
+        await hydrateIsinDictionary();
 
-          if (batchRes.ok) {
-            const batchJson = await batchRes.json();
-            const items = Array.isArray(batchJson)
-              ? batchJson
-              : Array.isArray(batchJson.data)
-                ? batchJson.data
-                : Array.isArray(batchJson.quotes)
-                  ? batchJson.quotes
-                  : null;
+        const templates = state.endpointTemplate
+          ? [state.endpointTemplate]
+          : [
+              '/api/1/equity/profile/{isin}',
+              '/api/1/equity/overview/{isin}',
+              '/api/1/equity/quote/{isin}',
+              '/api/1/quotes/last/{symbol}'
+            ];
 
-            const mapped = [];
-            if (items) {
-              const byTicker = new Map(items.map(i => [(i.symbol || i.ticker || '').toUpperCase(), i]));
-              for (const sym of state.symbols) {
-                if (byTicker.has(sym)) {
-                  mapped.push(normalizeQuote(sym, byTicker.get(sym)));
-                }
-              }
-            } else if (batchJson && typeof batchJson === 'object') {
-              for (const sym of state.symbols) {
-                if (batchJson[sym]) {
-                  mapped.push(normalizeQuote(sym, batchJson[sym]));
-                }
-              }
-            }
+        const results = [];
+        let loggedSampleKeys = false;
 
-            if (mapped.length > 0) {
-              state.quotes = mapped;
-              state.loading = false;
-              setStatus('live', `Live · ${mapped.length} quotes`);
-              addLog('ok', `Batch loaded ${mapped.length}/${state.symbols.length} quotes in 1 request.`);
-              renderCurrentRoute();
-              return;
-            }
-          }
+        for (const sym of state.symbols) {
+          const isIsin = /^[A-Z]{2}[A-Z0-9]{10}\$/.test(sym);
+          const isin = isIsin ? sym : (TICKER_TO_ISIN[sym] || '');
+          let loaded = false;
 
-          // Fallback: Individual quote endpoint /v1/equities/{ticker}/quote
-          addLog('warn', `Batch route unavailable (HTTP ${batchRes.status}); falling back to /v1/equities/{ticker}/quote.`);
-          const results = [];
-          for (const sym of state.symbols) {
+          for (const tpl of templates) {
+            if (tpl.includes('{isin}') && !isin) continue;
+
+            const path = tpl
+              .replace('{isin}', encodeURIComponent(isin))
+              .replace('{symbol}', encodeURIComponent(sym));
+
             try {
-              const q = await fetchSingleEulerpoolQuote(sym);
-              results.push(q);
-              addLog('ok', `Fetched ${sym}: ${q.price.toFixed(2)} (${q.percentChange >= 0 ? '+' : ''}${q.percentChange.toFixed(2)}%)`);
+              const res = await callEulerpoolGet(path);
+              if (res.ok) {
+                const json = await res.json();
+                const payload = Array.isArray(json) ? json[0] : (json.data || json);
+
+                if (payload && typeof payload === 'object') {
+                  const q = normalizeQuote(sym, payload);
+
+                  if (q.price === 0 && !loggedSampleKeys) {
+                    loggedSampleKeys = true;
+                    addLog('warn', `Connected to ${tpl}, returned keys: ${Object.keys(payload).join(', ')}`);
+                  }
+
+                  results.push(q);
+                  addLog('ok', `${q.symbol}: ${q.price.toFixed(2)} ${q.currency} (${q.percentChange >= 0 ? '+' : ''}${q.percentChange.toFixed(2)}%) via ${tpl}`);
+                  loaded = true;
+                  break;
+                }
+              } else if (res.status === 401 || res.status === 403) {
+                addLog('error', `Invalid API key (HTTP ${res.status}). Check your Eulerpool token.`);
+                setStatus('error', 'Auth Failed');
+                return;
+              }
             } catch (err) {
-              addLog('error', `${sym} failed: ${err.message}`);
+              addLog('error', `${sym} fetch error: ${err.message}`);
             }
           }
 
-          if (results.length > 0) {
-            state.quotes = results;
-            setStatus('live', `Live · ${results.length} quotes`);
-          } else {
-            setStatus('error', 'API Error');
+          if (!loaded) {
+            if (!isin) {
+              addLog('warn', `${sym}: No ISIN mapped yet. Enter its 12-character ISIN directly (e.g. US0378331005).`);
+            } else {
+              addLog('error', `${sym} (${isin}): Endpoint returned no data.`);
+            }
           }
-        } catch (err) {
-          setStatus('error', 'Connection Failed');
-          addLog('error', `Network/CORS error: ${err.message}. If hosting on GitHub Pages, set a CORS proxy in Configuration.`);
-        } finally {
-          state.loading = false;
-          renderCurrentRoute();
         }
+
+        if (results.length > 0) {
+          state.quotes = results;
+          setStatus('live', `Live · ${results.length} quotes`);
+        } else {
+          setStatus('error', 'No Quotes');
+        }
+        renderCurrentRoute();
       }
 
-      /* Simulated Demo Data for Instant Preview */
       function loadDemoData() {
         const samples = {
           'AAPL': { name: 'Apple Inc.', price: 234.80, prevClose: 231.15, open: 232.00, high: 235.60, low: 231.40 },
@@ -1117,435 +735,4 @@
           'NVDA': { name: 'NVIDIA Corp.', price: 146.35, prevClose: 141.10, open: 142.30, high: 147.20, low: 141.80 },
           'GOOGL': { name: 'Alphabet Inc.', price: 181.45, prevClose: 182.90, open: 182.50, high: 183.10, low: 180.60 },
           'AMZN': { name: 'Amazon.com Inc.', price: 212.60, prevClose: 209.80, open: 210.20, high: 213.40, low: 209.50 },
-          'META': { name: 'Meta Platforms', price: 594.10, prevClose: 587.40, open: 589.00, high: 596.00, low: 586.80 },
-          'TSLA': { name: 'Tesla Inc.', price: 328.90, prevClose: 336.40, open: 335.00, high: 337.20, low: 326.10 },
-          'RY.TO': { name: 'Royal Bank of Canada', price: 174.25, prevClose: 173.10, open: 173.40, high: 174.80, low: 172.90 },
-          'SHOP.TO': { name: 'Shopify Inc.', price: 152.70, prevClose: 148.20, open: 149.00, high: 153.50, low: 148.50 },
-          'ASML': { name: 'ASML Holding NV', price: 718.50, prevClose: 724.00, open: 722.10, high: 725.40, low: 715.20 }
-        };
-
-        state.isDemo = true;
-        state.quotes = state.symbols.map((sym, idx) => {
-          if (samples[sym]) {
-            return normalizeQuote(sym, samples[sym]);
-          }
-          const base = 95 + ((idx * 37) % 180);
-          const deltaPct = (((idx * 19) % 70) - 32) / 10;
-          const prevClose = Number((base / (1 + deltaPct / 100)).toFixed(2));
-          return normalizeQuote(sym, {
-            name: `${sym} Equity`,
-            price: base,
-            prevClose,
-            open: Number(((base + prevClose) / 2).toFixed(2)),
-            high: Number((Math.max(base, prevClose) * 1.012).toFixed(2)),
-            low: Number((Math.min(base, prevClose) * 0.988).toFixed(2))
-          });
-        });
-
-        setStatus('demo', 'Demo Mode');
-        addLog('info', `Loaded ${state.quotes.length} simulated quotes. Add your Eulerpool API key in Configure for live data.`);
-        renderCurrentRoute();
-      }
-
-      /* Formatting Helpers */
-      function fmtPrice(val) {
-        return Number(val || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-      }
-
-      function fmtSigned(val, suffix = '') {
-        const n = Number(val || 0);
-        const sign = n > 0 ? '+' : '';
-        return `${sign}${n.toFixed(2)}${suffix}`;
-      }
-
-      function getFilteredQuotes() {
-        const q = state.searchQuery.trim().toLowerCase();
-        if (!q) return state.quotes;
-        return state.quotes.filter(item =>
-          item.symbol.toLowerCase().includes(q) ||
-          item.name.toLowerCase().includes(q)
-        );
-      }
-
-      function renderSummaryStrip(quotes) {
-        if (!quotes.length) return '';
-        const gainers = quotes.filter(q => q.percentChange > 0).length;
-        const avgPct = quotes.reduce((sum, q) => sum + q.percentChange, 0) / quotes.length;
-        const topMover = [...quotes].sort((a, b) => Math.abs(b.percentChange) - Math.abs(a.percentChange))[0];
-
-        return `
-          <div class="summary-strip">
-            <div class="kpi-card">
-              <div class="kpi-label">Tracked Symbols</div>
-              <div class="kpi-value">${quotes.length}</div>
-            </div>
-            <div class="kpi-card">
-              <div class="kpi-label">Advancing / Declining</div>
-              <div class="kpi-value">
-                <span class="pos-text">${gainers}</span>
-                <span style="color: var(--text-muted);"> / </span>
-                <span class="neg-text">${quotes.length - gainers}</span>
-              </div>
-            </div>
-            <div class="kpi-card">
-              <div class="kpi-label">Equal-Weight Move</div>
-              <div class="kpi-value ${avgPct >= 0 ? 'pos-text' : 'neg-text'}">${fmtSigned(avgPct, '%')}</div>
-            </div>
-            <div class="kpi-card">
-              <div class="kpi-label">Top Mover</div>
-              <div class="kpi-value">
-                ${escapeHtml(topMover.symbol)}
-                <span style="font-size: 0.9rem;" class="${topMover.percentChange >= 0 ? 'pos-text' : 'neg-text'}">${fmtSigned(topMover.percentChange, '%')}</span>
-              </div>
-            </div>
-          </div>
-        `;
-      }
-
-      /* View 1: Home (#/) */
-      function renderHomeView(container) {
-        const filtered = getFilteredQuotes();
-
-        container.innerHTML = `
-          ${renderSummaryStrip(state.quotes)}
-          <div class="toolbar">
-            <div class="toolbar-left">
-              <input type="text" class="search-input" id="home-search" placeholder="Filter ticker or company…" value="${escapeHtml(state.searchQuery)}" />
-            </div>
-            <span style="font-size: 0.78rem; color: var(--text-muted);">
-              ${state.isDemo ? 'Simulated preview · Enter Eulerpool key in Configure' : 'Source: Eulerpool REST API'}
-            </span>
-          </div>
-          ${filtered.length === 0
-            ? `<div class="empty-state">No symbols match your filter. Adjust your search or add tickers in Configuration.</div>`
-            : `<div class="cards-grid">
-                ${filtered.map(q => {
-                  const isPos = q.percentChange > 0.005;
-                  const isNeg = q.percentChange < -0.005;
-                  const badgeCls = isPos ? 'pos' : isNeg ? 'neg' : 'flat';
-                  const textCls = isPos ? 'pos-text' : isNeg ? 'neg-text' : '';
-                  const rangePct = q.high > q.low
-                    ? Math.max(4, Math.min(100, ((q.price - q.low) / (q.high - q.low)) * 100))
-                    : 50;
-                  const logoUrl = `${EULERPOOL_BASE}/api/1/logo/ticker/${encodeURIComponent(q.symbol.split('.')[0])}`;
-
-                  return `
-                    <article class="stock-card">
-                      <div class="card-top">
-                        <div class="ticker-identity">
-                          <div class="logo-wrap">
-                            <img src="${logoUrl}" alt="" loading="lazy" onerror="this.remove();" />
-                            <span>${escapeHtml(q.symbol.slice(0, 3))}</span>
-                          </div>
-                          <div>
-                            <div class="ticker-title">${escapeHtml(q.symbol)}</div>
-                            <div class="ticker-sub">${escapeHtml(q.name)}</div>
-                          </div>
-                        </div>
-                        <span class="badge ${badgeCls}">${fmtSigned(q.percentChange, '%')}</span>
-                      </div>
-
-                      <div class="price-row">
-                        <div class="price-main mono">${fmtPrice(q.price)} <span style="font-size: 0.72rem; color: var(--text-muted); font-weight: 500;">${escapeHtml(q.currency)}</span></div>
-                        <div class="price-delta mono ${textCls}">${fmtSigned(q.change)}</div>
-                      </div>
-
-                      <div class="range-block">
-                        <div class="range-labels mono">
-                          <span>L: ${fmtPrice(q.low)}</span>
-                          <span>Intraday Range</span>
-                          <span>H: ${fmtPrice(q.high)}</span>
-                        </div>
-                        <div class="range-track">
-                          <div class="range-fill" style="width: ${rangePct}%;"></div>
-                        </div>
-                      </div>
-
-                      <div class="meta-grid mono">
-                        <div class="meta-item"><span>OPEN</span>${fmtPrice(q.open)}</div>
-                        <div class="meta-item"><span>PREV CLOSE</span>${fmtPrice(q.prevClose)}</div>
-                        <div class="meta-item"><span>PULSE</span><strong style="color: ${q.pulse.color};">${q.pulse.tier}</strong></div>
-                      </div>
-
-                      <div class="score-footer">
-                        <span style="color: var(--text-secondary);">Rule-Based Score</span>
-                        <span class="score-pill" style="color: ${q.pulse.color};">${q.pulse.score} / 100</span>
-                      </div>
-                    </article>
-                  `;
-                }).join('')}
-              </div>`
-          }
-        `;
-
-        document.getElementById('home-search')?.addEventListener('input', e => {
-          state.searchQuery = e.target.value;
-          renderHomeView(container);
-        });
-      }
-
-      /* View 2: Watchlist (#/watchlist) */
-      function renderWatchlistView(container) {
-        const sorted = [...getFilteredQuotes()].sort((a, b) => {
-          const dir = state.sortDir === 'asc' ? 1 : -1;
-          if (state.sortField === 'symbol') return a.symbol.localeCompare(b.symbol) * dir;
-          if (state.sortField === 'score') return (a.pulse.score - b.pulse.score) * dir;
-          return ((a[state.sortField] ?? 0) - (b[state.sortField] ?? 0)) * dir;
-        });
-
-        const arrow = field => state.sortField === field ? (state.sortDir === 'asc' ? ' ↑' : ' ↓') : '';
-
-        container.innerHTML = `
-          ${renderSummaryStrip(state.quotes)}
-          <div class="toolbar">
-            <form id="quick-add-form" class="input-row" style="max-width: 340px;">
-              <input type="text" id="quick-add-input" placeholder="Add symbol (e.g. NVDA, TD.TO)…" />
-              <button type="submit" class="primary">Add</button>
-            </form>
-            <input type="text" class="search-input" id="watchlist-search" placeholder="Filter table…" value="${escapeHtml(state.searchQuery)}" />
-          </div>
-
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th data-sort="symbol">Symbol${arrow('symbol')}</th>
-                  <th data-sort="price">Last Price${arrow('price')}</th>
-                  <th data-sort="change">Change${arrow('change')}</th>
-                  <th data-sort="percentChange">% Change${arrow('percentChange')}</th>
-                  <th data-sort="open">Open${arrow('open')}</th>
-                  <th data-sort="high">Day High${arrow('high')}</th>
-                  <th data-sort="low">Day Low${arrow('low')}</th>
-                  <th data-sort="score">Pulse Score${arrow('score')}</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                ${sorted.map(q => {
-                  const cls = q.percentChange > 0.005 ? 'pos-text' : q.percentChange < -0.005 ? 'neg-text' : '';
-                  return `
-                    <tr>
-                      <td>
-                        <strong>${escapeHtml(q.symbol)}</strong>
-                        <div style="font-size: 0.72rem; color: var(--text-muted);">${escapeHtml(q.name)}</div>
-                      </td>
-                      <td class="mono"><strong>${fmtPrice(q.price)}</strong> <span style="font-size: 0.72rem; color: var(--text-muted);">${escapeHtml(q.currency)}</span></td>
-                      <td class="mono ${cls}">${fmtSigned(q.change)}</td>
-                      <td class="mono ${cls}"><strong>${fmtSigned(q.percentChange, '%')}</strong></td>
-                      <td class="mono">${fmtPrice(q.open)}</td>
-                      <td class="mono">${fmtPrice(q.high)}</td>
-                      <td class="mono">${fmtPrice(q.low)}</td>
-                      <td class="mono"><span style="color: ${q.pulse.color}; font-weight: 700;">${q.pulse.score}</span> <span style="color: var(--text-muted); font-size: 0.75rem;">(${q.pulse.tier})</span></td>
-                      <td style="text-align: right;">
-                        <button type="button" class="ghost" data-remove="${escapeHtml(q.symbol)}" title="Remove ${escapeHtml(q.symbol)}">✕</button>
-                      </td>
-                    </tr>
-                  `;
-                }).join('')}
-              </tbody>
-            </table>
-          </div>
-        `;
-
-        container.querySelectorAll('th[data-sort]').forEach(th => {
-          th.addEventListener('click', () => {
-            const field = th.dataset.sort;
-            if (state.sortField === field) {
-              state.sortDir = state.sortDir === 'asc' ? 'desc' : 'asc';
-            } else {
-              state.sortField = field;
-              state.sortDir = field === 'symbol' ? 'asc' : 'desc';
-            }
-            renderWatchlistView(container);
-          });
-        });
-
-        container.querySelectorAll('button[data-remove]').forEach(btn => {
-          btn.addEventListener('click', () => {
-            const sym = btn.dataset.remove;
-            state.symbols = state.symbols.filter(s => s !== sym);
-            state.quotes = state.quotes.filter(q => q.symbol !== sym);
-            localStorage.setItem(STORAGE_KEYS.SYMBOLS, state.symbols.join(', '));
-            document.getElementById('input-symbols').value = state.symbols.join(', ');
-            addLog('info', `Removed ${sym} from watchlist.`);
-            renderWatchlistView(container);
-          });
-        });
-
-        document.getElementById('quick-add-form')?.addEventListener('submit', e => {
-          e.preventDefault();
-          const input = document.getElementById('quick-add-input');
-          const sym = input.value.trim().toUpperCase();
-          if (!sym) return;
-          if (!state.symbols.includes(sym)) {
-            state.symbols.push(sym);
-            localStorage.setItem(STORAGE_KEYS.SYMBOLS, state.symbols.join(', '));
-            document.getElementById('input-symbols').value = state.symbols.join(', ');
-            state.isDemo ? loadDemoData() : fetchQuotesFromEulerpool();
-          }
-          input.value = '';
-        });
-
-        document.getElementById('watchlist-search')?.addEventListener('input', e => {
-          state.searchQuery = e.target.value;
-          renderWatchlistView(container);
-        });
-      }
-
-      /* View 3: Heatmap (#/heatmap) */
-      function getHeatColor(pct) {
-        if (pct >= 3) return '#047857';
-        if (pct >= 1.5) return '#059669';
-        if (pct > 0.15) return '#10b981';
-        if (pct >= -0.15) return '#334155';
-        if (pct > -1.5) return '#dc2626';
-        if (pct > -3) return '#b91c1c';
-        return '#991b1b';
-      }
-
-      function renderHeatmapView(container) {
-        const ordered = [...state.quotes].sort((a, b) => b.percentChange - a.percentChange);
-
-        container.innerHTML = `
-          ${renderSummaryStrip(state.quotes)}
-          <div class="toolbar">
-            <h2 style="font-size: 1rem; font-weight: 600;">Daily Performance Heatmap</h2>
-            <div class="heatmap-legend">
-              <span>-3%+</span>
-              <span class="legend-swatch" style="background: #991b1b;"></span>
-              <span class="legend-swatch" style="background: #dc2626;"></span>
-              <span class="legend-swatch" style="background: #334155;"></span>
-              <span class="legend-swatch" style="background: #10b981;"></span>
-              <span class="legend-swatch" style="background: #047857;"></span>
-              <span>+3%+</span>
-            </div>
-          </div>
-
-          <div class="heatmap-grid">
-            ${ordered.map(q => `
-              <div class="heat-tile" style="background-color: ${getHeatColor(q.percentChange)};" title="${escapeHtml(q.name)} (${fmtSigned(q.percentChange, '%')})">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                  <span class="heat-symbol">${escapeHtml(q.symbol)}</span>
-                  <span style="font-size: 0.7rem; color: rgba(255,255,255,0.8);">${escapeHtml(q.currency)}</span>
-                </div>
-                <div class="heat-pct">${fmtSigned(q.percentChange, '%')}</div>
-                <div class="heat-price">${fmtPrice(q.price)} (${fmtSigned(q.change)})</div>
-              </div>
-            `).join('')}
-          </div>
-        `;
-      }
-
-      /* Hash Router */
-      function getCurrentRoute() {
-        const hash = window.location.hash.replace(/^#\/?/, '').toLowerCase();
-        if (hash === 'watchlist') return 'watchlist';
-        if (hash === 'heatmap') return 'heatmap';
-        return 'home';
-      }
-
-      function renderCurrentRoute() {
-        const route = getCurrentRoute();
-        document.querySelectorAll('nav[aria-label="Pages"] a').forEach(link => {
-          link.classList.toggle('active', link.dataset.route === route);
-        });
-
-        const main = document.getElementById('app-main');
-        if (route === 'watchlist') {
-          renderWatchlistView(main);
-        } else if (route === 'heatmap') {
-          renderHeatmapView(main);
-        } else {
-          renderHomeView(main);
-        }
-      }
-
-      /* Event Wiring & Initialization */
-      function init() {
-        const drawer = document.getElementById('config-drawer');
-        const toggleBtn = document.getElementById('btn-toggle-config');
-        const keyInput = document.getElementById('input-api-key');
-        const symbolsInput = document.getElementById('input-symbols');
-        const proxyInput = document.getElementById('input-cors-proxy');
-        const savedBadge = document.getElementById('key-saved-badge');
-
-        keyInput.value = state.apiKey;
-        symbolsInput.value = state.symbols.join(', ');
-        proxyInput.value = state.corsProxy;
-        if (state.apiKey) savedBadge.style.display = 'inline';
-
-        // Open configuration drawer automatically on first visit if no API key is set
-        if (!state.apiKey) {
-          drawer.hidden = false;
-          toggleBtn.setAttribute('aria-expanded', 'true');
-        }
-
-        toggleBtn.addEventListener('click', () => {
-          const nextHidden = !drawer.hidden;
-          drawer.hidden = nextHidden;
-          toggleBtn.setAttribute('aria-expanded', String(!nextHidden));
-        });
-
-        document.getElementById('btn-toggle-key-vis').addEventListener('click', e => {
-          const isPwd = keyInput.type === 'password';
-          keyInput.type = isPwd ? 'text' : 'password';
-          e.target.textContent = isPwd ? 'Hide' : 'Show';
-        });
-
-        document.getElementById('btn-save-key').addEventListener('click', () => {
-          state.apiKey = keyInput.value.trim();
-          state.corsProxy = proxyInput.value.trim();
-          localStorage.setItem(STORAGE_KEYS.API_KEY, state.apiKey);
-          localStorage.setItem(STORAGE_KEYS.PROXY, state.corsProxy);
-          savedBadge.style.display = state.apiKey ? 'inline' : 'none';
-          addLog('info', state.apiKey ? 'Eulerpool API key saved to browser storage.' : 'API key cleared.');
-          fetchQuotesFromEulerpool();
-        });
-
-        document.getElementById('btn-save-symbols').addEventListener('click', () => {
-          const parsed = parseSymbols(symbolsInput.value);
-          if (!parsed) {
-            addLog('warn', 'Enter at least one valid ticker symbol.');
-            return;
-          }
-          state.symbols = parsed;
-          localStorage.setItem(STORAGE_KEYS.SYMBOLS, parsed.join(', '));
-          addLog('info', `Updated watchlist (${parsed.length} symbols).`);
-          state.apiKey ? fetchQuotesFromEulerpool() : loadDemoData();
-        });
-
-        document.getElementById('btn-refresh').addEventListener('click', () => {
-          state.apiKey ? fetchQuotesFromEulerpool() : loadDemoData();
-        });
-
-        document.getElementById('btn-load-demo').addEventListener('click', loadDemoData);
-
-        document.getElementById('btn-clear-log').addEventListener('click', () => {
-          state.logs = [];
-          renderLogs();
-        });
-
-        document.querySelectorAll('#log-filters button').forEach(btn => {
-          btn.addEventListener('click', () => {
-            document.querySelectorAll('#log-filters button').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            state.logFilter = btn.dataset.level;
-            renderLogs();
-          });
-        });
-
-        window.addEventListener('hashchange', renderCurrentRoute);
-
-        // Initial load
-        if (state.apiKey) {
-          fetchQuotesFromEulerpool();
-        } else {
-          loadDemoData();
-        }
-      }
-
-      init();
-    })();
-  </script>
-</body>
-</html>
+          'META': { name: 'Meta Platforms', price: 594.10,
