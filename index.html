@@ -670,7 +670,7 @@
         let loggedSampleKeys = false;
 
         for (const sym of state.symbols) {
-          const isIsin = /^[A-Z]{2}[A-Z0-9]{10}\$/.test(sym);
+          const isIsin = /^[A-Z]{2}[A-Z0-9]{10}$/.test(sym);
           const isin = isIsin ? sym : (TICKER_TO_ISIN[sym] || '');
           let loaded = false;
 
@@ -735,4 +735,344 @@
           'NVDA': { name: 'NVIDIA Corp.', price: 146.35, prevClose: 141.10, open: 142.30, high: 147.20, low: 141.80 },
           'GOOGL': { name: 'Alphabet Inc.', price: 181.45, prevClose: 182.90, open: 182.50, high: 183.10, low: 180.60 },
           'AMZN': { name: 'Amazon.com Inc.', price: 212.60, prevClose: 209.80, open: 210.20, high: 213.40, low: 209.50 },
-          'META': { name: 'Meta Platforms', price: 594.10,
+          'META': { name: 'Meta Platforms', price: 594.10, prevClose: 587.40, open: 589.00, high: 596.00, low: 586.80 },
+          'TSLA': { name: 'Tesla Inc.', price: 328.90, prevClose: 336.40, open: 335.00, high: 337.20, low: 326.10 },
+          'RY.TO': { name: 'Royal Bank of Canada', price: 174.25, prevClose: 173.10, open: 173.40, high: 174.80, low: 172.90 },
+          'SHOP.TO': { name: 'Shopify Inc.', price: 152.70, prevClose: 148.20, open: 149.00, high: 153.50, low: 148.50 },
+          'ASML': { name: 'ASML Holding NV', price: 718.50, prevClose: 724.00, open: 722.10, high: 725.40, low: 715.20 }
+        };
+
+        state.isDemo = true;
+        state.quotes = state.symbols.map((sym, idx) => {
+          if (samples[sym]) return normalizeQuote(sym, samples[sym]);
+          const base = 95 + ((idx * 37) % 180);
+          const prevClose = Number((base * 0.992).toFixed(2));
+          return normalizeQuote(sym, { name: `${sym} Equity`, price: base, prevClose, open: prevClose, high: base * 1.01, low: prevClose * 0.99 });
+        });
+
+        setStatus('demo', 'Demo Mode');
+        addLog('info', `Loaded ${state.quotes.length} simulated quotes.`);
+        renderCurrentRoute();
+      }
+
+      function fmtPrice(val) {
+        return Number(val || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      }
+
+      function fmtSigned(val, suffix = '') {
+        const n = Number(val || 0);
+        return `${n > 0 ? '+' : ''}${n.toFixed(2)}${suffix}`;
+      }
+
+      function getFilteredQuotes() {
+        const q = state.searchQuery.trim().toLowerCase();
+        return q
+          ? state.quotes.filter(i => i.symbol.toLowerCase().includes(q) || i.name.toLowerCase().includes(q))
+          : state.quotes;
+      }
+
+      function renderSummaryStrip(quotes) {
+        if (!quotes.length) return '';
+        const gainers = quotes.filter(q => q.percentChange > 0).length;
+        const avgPct = quotes.reduce((s, q) => s + q.percentChange, 0) / quotes.length;
+        const topMover = [...quotes].sort((a, b) => Math.abs(b.percentChange) - Math.abs(a.percentChange))[0];
+
+        return `
+          <div class="summary-strip">
+            <div class="kpi-card"><div class="kpi-label">Tracked Symbols</div><div class="kpi-value">${quotes.length}</div></div>
+            <div class="kpi-card"><div class="kpi-label">Advancing / Declining</div><div class="kpi-value"><span class="pos-text">${gainers}</span> / <span class="neg-text">${quotes.length - gainers}</span></div></div>
+            <div class="kpi-card"><div class="kpi-label">Equal-Weight Move</div><div class="kpi-value ${avgPct >= 0 ? 'pos-text' : 'neg-text'}">${fmtSigned(avgPct, '%')}</div></div>
+            <div class="kpi-card"><div class="kpi-label">Top Mover</div><div class="kpi-value">${escapeHtml(topMover.symbol)} <span style="font-size: 0.9rem;" class="${topMover.percentChange >= 0 ? 'pos-text' : 'neg-text'}">${fmtSigned(topMover.percentChange, '%')}</span></div></div>
+          </div>
+        `;
+      }
+
+      function renderHomeView(container) {
+        const filtered = getFilteredQuotes();
+        container.innerHTML = `
+          ${renderSummaryStrip(state.quotes)}
+          <div class="toolbar">
+            <div class="toolbar-left">
+              <input type="text" class="search-input" id="home-search" placeholder="Filter ticker or company…" value="${escapeHtml(state.searchQuery)}" />
+            </div>
+            <span style="font-size: 0.78rem; color: var(--text-muted);">${state.isDemo ? 'Simulated preview' : 'Source: Eulerpool REST API'}</span>
+          </div>
+          ${filtered.length === 0
+            ? `<div class="empty-state">No quotes loaded yet. Check the Feed log in Configure for endpoint status.</div>`
+            : `<div class="cards-grid">
+                ${filtered.map(q => {
+                  const badgeCls = q.percentChange > 0.005 ? 'pos' : q.percentChange < -0.005 ? 'neg' : 'flat';
+                  const textCls = q.percentChange > 0.005 ? 'pos-text' : q.percentChange < -0.005 ? 'neg-text' : '';
+                  const rangePct = q.high > q.low ? Math.max(4, Math.min(100, ((q.price - q.low) / (q.high - q.low)) * 100)) : 50;
+                  const logoUrl = `${EULERPOOL_BASE}/api/1/logo/ticker/${encodeURIComponent(q.symbol.split('.')[0])}`;
+
+                  return `
+                    <article class="stock-card">
+                      <div class="card-top">
+                        <div class="ticker-identity">
+                          <div class="logo-wrap">
+                            <img src="${logoUrl}" alt="" loading="lazy" onerror="this.remove();" />
+                            <span>${escapeHtml(q.symbol.slice(0, 3))}</span>
+                          </div>
+                          <div>
+                            <div class="ticker-title">${escapeHtml(q.symbol)}</div>
+                            <div class="ticker-sub">${escapeHtml(q.name)}</div>
+                          </div>
+                        </div>
+                        <span class="badge ${badgeCls}">${fmtSigned(q.percentChange, '%')}</span>
+                      </div>
+                      <div class="price-row">
+                        <div class="price-main mono">${fmtPrice(q.price)} <span style="font-size: 0.72rem; color: var(--text-muted); font-weight: 500;">${escapeHtml(q.currency)}</span></div>
+                        <div class="price-delta mono ${textCls}">${fmtSigned(q.change)}</div>
+                      </div>
+                      <div class="range-block">
+                        <div class="range-labels mono"><span>L: ${fmtPrice(q.low)}</span><span>Intraday Range</span><span>H: ${fmtPrice(q.high)}</span></div>
+                        <div class="range-track"><div class="range-fill" style="width: ${rangePct}%;"></div></div>
+                      </div>
+                      <div class="meta-grid mono">
+                        <div class="meta-item"><span>OPEN</span>${fmtPrice(q.open)}</div>
+                        <div class="meta-item"><span>PREV CLOSE</span>${fmtPrice(q.prevClose)}</div>
+                        <div class="meta-item"><span>PULSE</span><strong style="color: ${q.pulse.color};">${q.pulse.tier}</strong></div>
+                      </div>
+                      <div class="score-footer">
+                        <span style="color: var(--text-secondary);">Rule-Based Score</span>
+                        <span class="score-pill" style="color: ${q.pulse.color};">${q.pulse.score} / 100</span>
+                      </div>
+                    </article>
+                  `;
+                }).join('')}
+              </div>`
+          }
+        `;
+        document.getElementById('home-search')?.addEventListener('input', e => {
+          state.searchQuery = e.target.value;
+          renderHomeView(container);
+        });
+      }
+
+      function renderWatchlistView(container) {
+        const sorted = [...getFilteredQuotes()].sort((a, b) => {
+          const dir = state.sortDir === 'asc' ? 1 : -1;
+          if (state.sortField === 'symbol') return a.symbol.localeCompare(b.symbol) * dir;
+          if (state.sortField === 'score') return (a.pulse.score - b.pulse.score) * dir;
+          return ((a[state.sortField] ?? 0) - (b[state.sortField] ?? 0)) * dir;
+        });
+        const arrow = f => state.sortField === f ? (state.sortDir === 'asc' ? ' ↑' : ' ↓') : '';
+
+        container.innerHTML = `
+          ${renderSummaryStrip(state.quotes)}
+          <div class="toolbar">
+            <form id="quick-add-form" class="input-row" style="max-width: 340px;">
+              <input type="text" id="quick-add-input" placeholder="Add ticker or ISIN…" />
+              <button type="submit" class="primary">Add</button>
+            </form>
+            <input type="text" class="search-input" id="watchlist-search" placeholder="Filter table…" value="${escapeHtml(state.searchQuery)}" />
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th data-sort="symbol">Symbol${arrow('symbol')}</th>
+                  <th data-sort="price">Last Price${arrow('price')}</th>
+                  <th data-sort="change">Change${arrow('change')}</th>
+                  <th data-sort="percentChange">% Change${arrow('percentChange')}</th>
+                  <th data-sort="open">Open${arrow('open')}</th>
+                  <th data-sort="high">Day High${arrow('high')}</th>
+                  <th data-sort="low">Day Low${arrow('low')}</th>
+                  <th data-sort="score">Pulse Score${arrow('score')}</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                ${sorted.map(q => {
+                  const cls = q.percentChange > 0.005 ? 'pos-text' : q.percentChange < -0.005 ? 'neg-text' : '';
+                  return `
+                    <tr>
+                      <td><strong>${escapeHtml(q.symbol)}</strong><div style="font-size: 0.72rem; color: var(--text-muted);">${escapeHtml(q.name)}</div></td>
+                      <td class="mono"><strong>${fmtPrice(q.price)}</strong> <span style="font-size: 0.72rem; color: var(--text-muted);">${escapeHtml(q.currency)}</span></td>
+                      <td class="mono ${cls}">${fmtSigned(q.change)}</td>
+                      <td class="mono ${cls}"><strong>${fmtSigned(q.percentChange, '%')}</strong></td>
+                      <td class="mono">${fmtPrice(q.open)}</td>
+                      <td class="mono">${fmtPrice(q.high)}</td>
+                      <td class="mono">${fmtPrice(q.low)}</td>
+                      <td class="mono"><span style="color: ${q.pulse.color}; font-weight: 700;">${q.pulse.score}</span> (${q.pulse.tier})</td>
+                      <td style="text-align: right;"><button type="button" class="ghost" data-remove="${escapeHtml(q.symbol)}">✕</button></td>
+                    </tr>
+                  `;
+                }).join('')}
+              </tbody>
+            </table>
+          </div>
+        `;
+
+        container.querySelectorAll('th[data-sort]').forEach(th => {
+          th.addEventListener('click', () => {
+            const f = th.dataset.sort;
+            state.sortDir = state.sortField === f ? (state.sortDir === 'asc' ? 'desc' : 'asc') : 'desc';
+            state.sortField = f;
+            renderWatchlistView(container);
+          });
+        });
+
+        container.querySelectorAll('button[data-remove]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const sym = btn.dataset.remove;
+            state.symbols = state.symbols.filter(s => s !== sym);
+            state.quotes = state.quotes.filter(q => q.symbol !== sym);
+            localStorage.setItem(STORAGE_KEYS.SYMBOLS, state.symbols.join(', '));
+            document.getElementById('input-symbols').value = state.symbols.join(', ');
+            renderWatchlistView(container);
+          });
+        });
+
+        document.getElementById('quick-add-form')?.addEventListener('submit', e => {
+          e.preventDefault();
+          const input = document.getElementById('quick-add-input');
+          const sym = input.value.trim().toUpperCase();
+          if (sym && !state.symbols.includes(sym)) {
+            state.symbols.push(sym);
+            localStorage.setItem(STORAGE_KEYS.SYMBOLS, state.symbols.join(', '));
+            document.getElementById('input-symbols').value = state.symbols.join(', ');
+            state.isDemo ? loadDemoData() : fetchQuotesFromEulerpool();
+          }
+          input.value = '';
+        });
+
+        document.getElementById('watchlist-search')?.addEventListener('input', e => {
+          state.searchQuery = e.target.value;
+          renderWatchlistView(container);
+        });
+      }
+
+      function getHeatColor(pct) {
+        if (pct >= 3) return '#047857';
+        if (pct >= 1.5) return '#059669';
+        if (pct > 0.15) return '#10b981';
+        if (pct >= -0.15) return '#334155';
+        if (pct > -1.5) return '#dc2626';
+        if (pct > -3) return '#b91c1c';
+        return '#991b1b';
+      }
+
+      function renderHeatmapView(container) {
+        const ordered = [...state.quotes].sort((a, b) => b.percentChange - a.percentChange);
+        container.innerHTML = `
+          ${renderSummaryStrip(state.quotes)}
+          <div class="toolbar">
+            <h2 style="font-size: 1rem; font-weight: 600;">Daily Performance Heatmap</h2>
+            <div class="heatmap-legend">
+              <span>-3%+</span>
+              <span class="legend-swatch" style="background: #991b1b;"></span>
+              <span class="legend-swatch" style="background: #dc2626;"></span>
+              <span class="legend-swatch" style="background: #334155;"></span>
+              <span class="legend-swatch" style="background: #10b981;"></span>
+              <span class="legend-swatch" style="background: #047857;"></span>
+              <span>+3%+</span>
+            </div>
+          </div>
+          <div class="heatmap-grid">
+            ${ordered.map(q => `
+              <div class="heat-tile" style="background-color: ${getHeatColor(q.percentChange)};">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                  <span class="heat-symbol">${escapeHtml(q.symbol)}</span>
+                  <span style="font-size: 0.7rem; color: rgba(255,255,255,0.8);">${escapeHtml(q.currency)}</span>
+                </div>
+                <div class="heat-pct">${fmtSigned(q.percentChange, '%')}</div>
+                <div class="heat-price">${fmtPrice(q.price)} (${fmtSigned(q.change)})</div>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      }
+
+      function getCurrentRoute() {
+        const hash = window.location.hash.replace(/^#\/?/, '').toLowerCase();
+        if (hash === 'watchlist') return 'watchlist';
+        if (hash === 'heatmap') return 'heatmap';
+        return 'home';
+      }
+
+      function renderCurrentRoute() {
+        const route = getCurrentRoute();
+        document.querySelectorAll('nav[aria-label="Pages"] a').forEach(link => {
+          link.classList.toggle('active', link.dataset.route === route);
+        });
+        const main = document.getElementById('app-main');
+        if (route === 'watchlist') renderWatchlistView(main);
+        else if (route === 'heatmap') renderHeatmapView(main);
+        else renderHomeView(main);
+      }
+
+      function init() {
+        const drawer = document.getElementById('config-drawer');
+        const toggleBtn = document.getElementById('btn-toggle-config');
+        const keyInput = document.getElementById('input-api-key');
+        const symbolsInput = document.getElementById('input-symbols');
+        const endpointInput = document.getElementById('input-endpoint-path');
+        const savedBadge = document.getElementById('key-saved-badge');
+
+        keyInput.value = state.apiKey;
+        symbolsInput.value = state.symbols.join(', ');
+        endpointInput.value = state.endpointTemplate;
+        if (state.apiKey) savedBadge.style.display = 'inline';
+
+        if (!state.apiKey) {
+          drawer.hidden = false;
+          toggleBtn.setAttribute('aria-expanded', 'true');
+        }
+
+        toggleBtn.addEventListener('click', () => {
+          const nextHidden = !drawer.hidden;
+          drawer.hidden = nextHidden;
+          toggleBtn.setAttribute('aria-expanded', String(!nextHidden));
+        });
+
+        document.getElementById('btn-toggle-key-vis').addEventListener('click', e => {
+          const isPwd = keyInput.type === 'password';
+          keyInput.type = isPwd ? 'text' : 'password';
+          e.target.textContent = isPwd ? 'Hide' : 'Show';
+        });
+
+        document.getElementById('btn-save-key').addEventListener('click', () => {
+          state.apiKey = keyInput.value.trim();
+          state.endpointTemplate = endpointInput.value.trim();
+          localStorage.setItem(STORAGE_KEYS.API_KEY, state.apiKey);
+          localStorage.setItem(STORAGE_KEYS.ENDPOINT, state.endpointTemplate);
+          savedBadge.style.display = state.apiKey ? 'inline' : 'none';
+          addLog('info', 'Configuration saved.');
+          fetchQuotesFromEulerpool();
+        });
+
+        document.getElementById('btn-save-symbols').addEventListener('click', () => {
+          const parsed = parseSymbols(symbolsInput.value);
+          if (!parsed) return;
+          state.symbols = parsed;
+          localStorage.setItem(STORAGE_KEYS.SYMBOLS, parsed.join(', '));
+          state.apiKey ? fetchQuotesFromEulerpool() : loadDemoData();
+        });
+
+        document.getElementById('btn-refresh').addEventListener('click', () => {
+          state.apiKey ? fetchQuotesFromEulerpool() : loadDemoData();
+        });
+
+        document.getElementById('btn-load-demo').addEventListener('click', loadDemoData);
+        document.getElementById('btn-clear-log').addEventListener('click', () => { state.logs = []; renderLogs(); });
+
+        document.querySelectorAll('#log-filters button').forEach(btn => {
+          btn.addEventListener('click', () => {
+            document.querySelectorAll('#log-filters button').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            state.logFilter = btn.dataset.level;
+            renderLogs();
+          });
+        });
+
+        window.addEventListener('hashchange', renderCurrentRoute);
+        state.apiKey ? fetchQuotesFromEulerpool() : loadDemoData();
+      }
+
+      init();
+    })();
+  </script>
+</body>
+</html>
